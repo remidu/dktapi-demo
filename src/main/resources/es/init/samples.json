@@ -1,0 +1,20 @@
+{ "index" : { "_index" : "sales", "_id" : "1" } }
+{ "country" : "FR", "store" : "1", "item": "A",  "price" : 20.0 }
+{ "index" : { "_index" : "sales", "_id" : "2" } }
+{ "country" : "FR", "store" : "1", "item": "B",  "price" : 30.0 }
+{ "index" : { "_index" : "sales", "_id" : "3" } }
+{ "country" : "FR", "store" : "1", "item": "C",  "price" : 40.0 }
+{ "index" : { "_index" : "sales", "_id" : "4" } }
+{ "country" : "FR", "store" : "2", "item": "D",  "price" : 10.0 }
+{ "index" : { "_index" : "sales", "_id" : "5" } }
+{ "country" : "FR", "store" : "2", "item": "A",  "price" : 20.0 }
+{ "index" : { "_index" : "sales", "_id" : "6" } }
+{ "country" : "IT", "store" : "3", "item": "A",  "price" : 20.0 }
+{ "index" : { "_index" : "sales", "_id" : "7" } }
+{ "country" : "IT", "store" : "4", "item": "B",  "price" : 30.0 }
+{ "index" : { "_index" : "sales", "_id" : "8" } }
+{ "country" : "ES", "store" : "5", "item": "C",  "price" : 40.0 }
+{ "index" : { "_index" : "sales", "_id" : "9" } }
+{ "country" : "ES", "store" : "5", "item": "B",  "price" : 30.0 }
+{ "index" : { "_index" : "sales", "_id" : "10" } }
+{ "country" : "ES", "store" : "6", "item": "C",  "price" : 40.0 }
