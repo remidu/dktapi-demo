@@ -33,7 +33,7 @@ public class Parameters {
                     node.put(name, value);
                 }
             }
-            log.info("Result node : " + node);
+            log.info("Parameters as node : " + node);
             return node;
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException e) {
             throw new RuntimeException(e);
