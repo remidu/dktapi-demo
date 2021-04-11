@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -43,11 +44,14 @@ public class TemplateInitializer {
         HttpPost request = new HttpPost("http://localhost:9200/_scripts/" + templateName);
         request.setEntity(new StringEntity(jsonRequest, ContentType.APPLICATION_JSON));
         try {
-            client.execute(request);
+            CloseableHttpResponse response = client.execute(request);
+            if (response.getStatusLine().getStatusCode() < 400) {
+                log.info("Uploaded template {}", templateName);
+            } else {
+                log.error("Failed to upload template {} : {}", templateName, response.getStatusLine().getReasonPhrase());
+            }            
         } catch (ConnectException e) {
             log.error("Could not connect to Elasticsearch, is it running ?", e);
         }
-
-        log.info("Uploaded template " + templateName);
     }
 }

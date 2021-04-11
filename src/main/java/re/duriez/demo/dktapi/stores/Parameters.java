@@ -1,4 +1,4 @@
-package re.duriez.demo.dktapi.sales;
+package re.duriez.demo.dktapi.stores;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
@@ -20,8 +20,7 @@ public class Parameters {
     @NotNull
     public String country;
 
-    @NotNull
-    public String store;
+    public String order = "desc";
 
     public ObjectNode buildEsParams() {
         try {
@@ -38,4 +37,5 @@ public class Parameters {
             throw new RuntimeException(e);
         }
     }
+    
 }

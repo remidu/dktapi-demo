@@ -1,0 +1,36 @@
+{
+    "script": {
+        "lang": "mustache",
+        "source":{
+            "query": {
+                "bool": {
+                    "should": [
+                        {
+                            "term": {
+                                "country": "{{country}}"
+                            }
+                        }
+                    ]
+                }
+            },
+            "size": 0,
+            "aggregations": {
+                "sorted-stores": {
+                    "terms": {
+                        "field": "store",
+                        "order": {
+                            "amount": "{{order}}"
+                        }
+                    },
+                    "aggregations": {
+                        "amount": {
+                            "sum": {
+                                "field": "price"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
