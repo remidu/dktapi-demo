@@ -1,0 +1,15 @@
+{
+    "script": {
+        "lang": "mustache",
+        "source": {
+            "query": {
+                "bool": {
+                    "should": [
+                        { "term": { "country": "{{country}}" } },
+                        { "term": { "store": "{{store}}" } }
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -27,22 +28,26 @@ public class TemplateInitializer {
     public void init() throws IOException {
         InputStream in = this.getClass().getClassLoader().getResourceAsStream(PATH);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
-        String templateFile;
-        while ((templateFile = br.readLine()) != null) { // for each file in directory
-            this.uploadTemplate(templateFile);
+        String templateFilename;
+        while ((templateFilename = br.readLine()) != null) { // for each file in directory
+            this.uploadTemplate(templateFilename);
         }
     }
 
-    private void uploadTemplate(String templatePath) throws IOException {
+    private void uploadTemplate(String templateName) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(
-            this.getClass().getClassLoader().getResourceAsStream(PATH + "/" + templatePath)));
+            this.getClass().getClassLoader().getResourceAsStream(PATH + "/" + templateName)));
         String jsonRequest = br.lines().collect(Collectors.joining());
 
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost request = new HttpPost("http://localhost:9200/_scripts/search");
+        HttpPost request = new HttpPost("http://localhost:9200/_scripts/" + templateName);
         request.setEntity(new StringEntity(jsonRequest, ContentType.APPLICATION_JSON));
-        client.execute(request);
+        try {
+            client.execute(request);
+        } catch (ConnectException e) {
+            log.error("Could not connect to Elasticsearch, is it running ?", e);
+        }
 
-        log.info("Uploaded " + templatePath);
+        log.info("Uploaded template " + templateName);
     }
 }

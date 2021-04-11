@@ -17,13 +17,18 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.springframework.stereotype.Service;
 
+import lombok.extern.log4j.Log4j2;
+
 @Service
+@Log4j2
 public class RequestService {
 
     public String search(String index, String templateId, ObjectNode json) throws IOException {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost request = new HttpPost("http://localhost:9200/" + index + "/_search/template");
-        request.setEntity(new StringEntity(this.buildJson(templateId, json), ContentType.APPLICATION_JSON));
+        String body = this.buildJson(templateId, json);
+        log.info("Sending search query : " + body);
+        request.setEntity(new StringEntity(body, ContentType.APPLICATION_JSON));
 
         CloseableHttpResponse response = client.execute(request);
         return EntityUtils.toString(response.getEntity());

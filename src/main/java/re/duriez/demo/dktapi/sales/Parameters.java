@@ -10,9 +10,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @Getter
 @Setter
 public class Parameters {
@@ -20,8 +18,6 @@ public class Parameters {
     public String country;
 
     public String store;
-
-    public String minimum;
 
     public ObjectNode buildEsParams() {
         try {
@@ -33,7 +29,6 @@ public class Parameters {
                     node.put(name, value);
                 }
             }
-            log.info("Parameters as node : " + node);
             return node;
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException e) {
             throw new RuntimeException(e);

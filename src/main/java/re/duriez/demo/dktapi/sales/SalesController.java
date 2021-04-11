@@ -24,20 +24,15 @@ public class SalesController {
     @GetMapping("/sales")
     public List<Sale> getSales(Parameters parameters) throws JsonMappingException, JsonProcessingException, IOException {
         List<Sale> sales = new ArrayList<>();
-        String result = requestService.search("sales", "search", parameters.buildEsParams());
+        String result = requestService.search("sales", "sales.json", parameters.buildEsParams());
 
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(result).findValue("hits").findValue("hits");
-        for (JsonNode entryNode : node) {
-            JsonNode test = mapper.readTree(entryNode.toString()).findValue("_source");
-            sales.add(mapper.readValue(test.toString(), Sale.class));
+        JsonNode hits = mapper.readTree(result).findValue("hits").findValue("hits");
+        for (JsonNode hit : hits) {
+            JsonNode source = mapper.readTree(hit.toString()).findValue("_source");
+            sales.add(mapper.readValue(source.toString(), Sale.class));
         }
         return sales;
-    }
-
-    @GetMapping("/models")
-    public String sortModels() {
-        return null; // TODO
     }
 
     @GetMapping("/stores")
